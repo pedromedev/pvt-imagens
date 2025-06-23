@@ -9,7 +9,37 @@
             margin: 0;
             padding: 20px;
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f4f8 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background-image: url('https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/seta-azul.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -150px;
+            left: -150px;
+            width: 400px;
+            height: 400px;
+            background-image: url('https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/seta-branca.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            z-index: -1;
         }
         
         .configurador {
@@ -20,10 +50,28 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .configurador::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background-image: url('https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/seta-azul.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.03;
+            z-index: 0;
         }
         
         .form-group {
             margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
         }
         
         .form-group label {
@@ -58,6 +106,22 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .preview-container::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 120px;
+            height: 120px;
+            background-image: url('https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/seta-branca.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.02;
+            z-index: 0;
         }
         
         .signature-table {
@@ -65,6 +129,8 @@
             width: 100%;
             max-width: 500px;
             font-family: Arial, sans-serif;
+            position: relative;
+            z-index: 1;
         }
         
         .signature-table td {
@@ -171,6 +237,57 @@
             border-bottom: 2px solid #1a365d;
             padding-bottom: 5px;
         }
+        
+        .info-card {
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            border-left: 6px solid #1a365d;
+        }
+        
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            background-image: url('https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/seta-branca.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        
+        .info-card-content {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-card h3 {
+            color: #1a365d;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .info-card p {
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        .info-card .highlight {
+            color: #1a365d;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -185,6 +302,7 @@
         <div class="form-group">
             <label for="funcao">Função:</label>
             <select id="funcao" onchange="atualizarAssinatura()">
+                <option value="Desenvolvedor">Desenvolvedor</option>
                 <option value="Comercial">Comercial</option>
                 <option value="Diretoria">Diretoria</option>
                 <option value="Gestão de Operações">Gestão de Operações</option>
@@ -220,20 +338,27 @@
         </div>
     </div>
 
+    <div class="info-card">
+        <div class="info-card-content">
+            <h3>💡 Dica de Uso</h3>
+            <p>Para usar sua assinatura no <span class="highlight">Outlook</span>, copie a assinatura abaixo e cole nas configurações de assinatura do seu email. A assinatura foi otimizada para <span class="highlight">máxima compatibilidade</span> com todos os clientes de email.</p>
+        </div>
+    </div>
+
     <div class="preview-container">
         <h2>👁️ Preview</h2>
         
         <table class="signature-table" id="assinatura">
             <tr>
                 <td class="logo-cell">
-                    <img src="imagens/logo-pvt-cinza.png" alt="PVT Software">
+                    <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/logo-pvt-cinza.png" alt="PVT Software">
                 </td>
                 <td class="content-cell">
                     <div class="nome" id="preview-nome">Nome Colaborador</div>
                     <div class="funcao" id="preview-funcao">Comercial</div>
                     
                     <div class="contato-item">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwLjAxIDEyLjc5NzQ5TDIwLjA4IDE0LjIyMTJDMjAuMTE1IDE0Ljg5MTYgMjAuMTMyIDE1LjIyNjggMjAuMDMyOCAxNS41MjM5QzE5LjgzOTEgMTYuMTgyOCAxOS4zOTUgMTYuNzI4NyAxOC44IDAxNy4wMzg3QzE4LjUzNyAxNy4xNzE5IDE4LjIyOSAxNy4yMzc5IDE3LjY5OSAxNy4yOEMxNi4zNzUgMTcuNDE3OSAxNC45NjUgMTYuODA4NyAxMy4zIDE1LjY5TDEyLjkgMTUuMzk5Qzg4LjM1NSAxMi4yNTIyIDUuNzQ3IDguMDY0ODQgMy4zIDAuNUMxLjE5MiA2LjAzNTE2IDEuNTgzIDQuNjI1MTYgMi43IDMuMzMwMTZDMi43OTMgMy4yMzAxNiAyLjkzNyAzLjEzMDE2IDMuMTY4IDMuMDMwMTZDMy41NDMgMi44NjAxNiAzLjk1OCAyLjc2MDE2IDQuNDMgMi43ODAxNkMzLjc5OCAyLjgyMDE2IDUuMTI1IDIuODkwMTYgNi40MDIgMy4zMDAyQ0M2LjY3NCAzLjQwMDE2IDQuOTM4IDMuNTMwMTYgNy4xNTggMy43OTBDOC4wODggMy45NTAzNiA5LjI5NCA0LjM3NzMgMTAuNSA1LjUwNzNDMTEuNzA0IDYuNjM3OTYgMTIuNzU4IDcuODk0MzMgMTMuNSA5LjI5NUwxMy44IDkuODg0QzE0LjkyIDExLjU0OSAxNS41MyAxMi45NTkgMTUuOTMgMTQuMjgzQzE2LjE3MyAxNS4yOTkgMTYuMjY3IDE1LjYzNSAxNi4yNjcgMTYuMTIzQzE2LjIzNyAxNi42MzQgMTYuMSAxNy4xNiAxNS44NCAxNy42NTFDMTYuMTM0IDE4LjA1NyAxNi4yNDMgMTguNDkgMTUuOTk1IDE4Ljg5OEgzMEM0LjEwNSAxOC44OTggNS4wNTEgMTcuOTUzIDUuNDQgMTcuMTA3QzYuMTYgMTYuMjUgNi41NDcgMTUuMjUzIDYuNjM3IDE0LjIyMUw2LjcwNyAxMi43OTc0TDYuNzcgMTEuMzc0QzYuODM3IDEwLjYwNzkgNi44NyA5LjcyNzY2IDYuODcgOC43OTczN0M2Ljg3IDMuOTQ0NDUgMTAuODE0IDAgMTUuNjY3IDBDMjAuNTIgMCAyNC40NjQgMy45NDQ0NSAyNC40NjQgOC43OTczN0MyNC40NjQgOS43Mjc2NiAyNC40MzEgMTAuNjA3OSAyNC4zNjQgMTEuMzc0TDIwLjAxIDEyLjc5NzQ5WiIgZmlsbD0iIzMzMzMzMyIvPgo8L3N2Zz4K" alt="Telefone">
+                        <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/telefone.png" alt="Telefone">
                         <span id="preview-telefones">(27) 9999-9999</span>
                     </div>
                     
@@ -243,18 +368,18 @@
                     
                     <div class="social-links">
                         <a href="#" id="whatsapp-link">
-                            <img src="imagens/whatsapp.png" alt="WhatsApp">
+                            <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/whatsapp.png" alt="WhatsApp">
                         </a>
                         <a href="https://www.instagram.com/pvtsoftware/">
-                            <img src="imagens/instagram.png" alt="Instagram">
+                            <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/instagram.png" alt="Instagram">
                         </a>
                         <a href="https://www.linkedin.com/company/pvtsoftware/">
-                            <img src="imagens/linkedin.png" alt="LinkedIn">
+                            <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/linkedin.png" alt="LinkedIn">
                         </a>
                     </div>
                     
                     <div class="endoso-logo">
-                        <img src="imagens/Group 5.png" alt="Endoso TOTVS">
+                        <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/Group%205.png" alt="Endoso TOTVS">
                     </div>
                 </td>
             </tr>
@@ -264,6 +389,17 @@
             <a href="#" class="btn" onclick="copiarAssinatura()">📋 Copiar Assinatura</a>
             <a href="#" class="btn" onclick="baixarHTML()">📁 Download HTML</a>
             <a href="#" class="btn" onclick="baixarJPG()">🖼️ Download JPG</a>
+        </div>
+    </div>
+
+    <div class="info-card">
+        <div class="info-card-content">
+            <h3>📚 Tutoriais de Configuração</h3>
+            <p>Precisa de ajuda para configurar sua assinatura? Acesse os tutoriais oficiais da Microsoft:</p>
+            <ul style="margin: 10px 0 0 20px; color: #666;">
+                <li><a href="https://support.office.com/pt-br/article/criar-e-adicionar-uma-assinatura-a-mensagens-8ee5d4f4-68fd-464a-a1c1-0e1c80bb27f2" target="_blank" style="color: #1a365d; text-decoration: none;">📖 Outlook 2016</a></li>
+                <li><a href="https://support.office.com/pt-br/article/criar-e-adicionar-uma-assinatura-de-email-no-outlook-na-web-5ff9dcfd-d3f1-447b-b2e9-39f91b074ea3" target="_blank" style="color: #1a365d; text-decoration: none;">🌐 Outlook Office 365</a></li>
+            </ul>
         </div>
     </div>
 

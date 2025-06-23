@@ -260,59 +260,45 @@
     <script>
         let tipoAssinatura = 'completa';
         
-        function gerarAssinaturaCompleta() {
-            const nome = document.getElementById('nome').value;
-            const funcao = document.getElementById('funcao').value;
-            const email = document.getElementById('email').value;
-            const celular = document.getElementById('celular').value;
-            const telefone = document.getElementById('telefone').value;
-            const whatsapp = document.getElementById('whatsapp').value;
-            
-            let telefones = [];
-            if (celular) telefones.push(celular);
-            if (telefone && telefone !== celular) telefones.push(telefone);
-            const telefonesTexto = telefones.join(' / ');
-            
-            const whatsappClean = whatsapp.replace(/\D/g, '');
-            
-            return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 500px; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%); border-radius: 15px; overflow: hidden; margin: 0;">
-    <tr>
-        <td style="padding: 20px; vertical-align: middle; width: 120px; text-align: center;">
-            <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/logo-pvt-branca.png" alt="PVT Software" style="width: 100px; height: auto; display: block; margin: 0 auto;">
-        </td>
-        <td style="padding: 20px; vertical-align: middle; border-left: 3px solid rgba(255, 255, 255, 0.5);">
-            <div style="font-size: 20px; font-weight: bold; color: white; margin: 0 0 5px 0; letter-spacing: 0.5px;">${nome}</div>
-            <div style="font-size: 13px; color: rgba(255, 255, 255, 0.9); margin: 0 0 12px 0; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">${funcao}</div>
-            
-            <div style="margin: 6px 0; font-size: 12px; color: rgba(255, 255, 255, 0.95);">
-                <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/telefone.png" alt="📞" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px;">
-                ${telefonesTexto}
-            </div>
-            
-            <div style="margin: 6px 0; font-size: 12px; color: rgba(255, 255, 255, 0.95);">
-                <span style="margin-right: 6px;">✉️</span>
-                <a href="mailto:${email}" style="color: rgba(255, 255, 255, 0.95); text-decoration: none;">${email}</a>
-            </div>
-            
-            <div style="margin: 10px 0;">
-                <a href="https://pvtsoftware.com.br" style="color: white; text-decoration: none; font-weight: 600; background: rgba(255, 255, 255, 0.2); padding: 4px 10px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.3); display: inline-block; font-size: 11px;">pvtsoftware.com.br</a>
-            </div>
-            
-            <div style="margin-top: 12px;">
-                <a href="https://wa.me/${whatsappClean}" style="text-decoration: none; display: inline-block; margin-right: 6px; width: 28px; height: 28px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; text-align: center; line-height: 28px; border: 1px solid rgba(255, 255, 255, 0.3);">
-                    <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/whatsapp.png" alt="WhatsApp" style="width: 14px; height: 14px; vertical-align: middle;">
-                </a>
-                <a href="https://www.instagram.com/pvtsoftware/" style="text-decoration: none; display: inline-block; margin-right: 6px; width: 28px; height: 28px; background: rgba(255, 255, 255, 0.2); border-radius: 14px; text-align: center; line-height: 28px; border: 1px solid rgba(255, 255, 255, 0.3);">
-                    <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/instagram.png" alt="Instagram" style="width: 14px; height: 14px; vertical-align: middle;">
-                </a>
-                <a href="https://www.linkedin.com/company/pvtsoftware/" style="text-decoration: none; display: inline-block; width: 28px; height: 28px; background: rgba(255, 255, 255, 0.2); border-radius: 14px; text-align: center; line-height: 28px; border: 1px solid rgba(255, 255, 255, 0.3);">
-                    <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/linkedin.png" alt="LinkedIn" style="width: 14px; height: 14px; vertical-align: middle;">
-                </a>
-            </div>
-        </td>
-    </tr>
-</table>`;
-        }
+                 function gerarAssinaturaCompleta() {
+             const nome = document.getElementById('nome').value;
+             const funcao = document.getElementById('funcao').value;
+             const email = document.getElementById('email').value;
+             const celular = document.getElementById('celular').value;
+             const telefone = document.getElementById('telefone').value;
+             const whatsapp = document.getElementById('whatsapp').value;
+             
+             let telefones = [];
+             if (celular) telefones.push(celular);
+             if (telefone && telefone !== celular) telefones.push(telefone);
+             const telefonesTexto = telefones.join(' / ');
+             
+             const whatsappClean = whatsapp.replace(/\D/g, '');
+             
+             return `<table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, sans-serif; font-size: 14px;">
+     <tr>
+         <td style="padding-right: 15px; vertical-align: top; text-align: center;">
+             <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/pvt.png" alt="PVT Software" style="width: 150px; height: auto; display: block; margin: 0 auto;">
+         </td>
+         <td style="vertical-align: top; line-height: 1.4;">
+             <strong style="color: #1a365d; font-size: 16px; display: block; margin: 0 0 2px 0;">${nome.toUpperCase()}</strong>
+             <span style="color: #666; font-size: 12px; display: block; margin: 0 0 8px 0;">${funcao.toUpperCase()}</span>
+             <span style="color: #333; font-size: 12px; display: block; margin: 0 0 2px 0;">${telefonesTexto}</span>
+             <a href="https://pvtsoftware.com.br" style="color: #1a365d; text-decoration: underline; font-size: 12px; display: block; margin: 0 0 2px 0;">https://pvtsoftware.com.br/</a>
+             <a href="mailto:${email}" style="color: #1a365d; text-decoration: underline; font-size: 12px; display: block; margin: 0 0 8px 0;">${email}</a>
+             <a href="https://wa.me/${whatsappClean}" style="text-decoration: none; margin-right: 8px;">
+                 <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/whatsapp.png" alt="WhatsApp" style="width: 20px; height: 20px; vertical-align: middle;">
+             </a>
+             <a href="https://www.instagram.com/pvtsoftware/" style="text-decoration: none; margin-right: 8px;">
+                 <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/instagram.png" alt="Instagram" style="width: 20px; height: 20px; vertical-align: middle;">
+             </a>
+             <a href="https://www.linkedin.com/company/pvtsoftware/" style="text-decoration: none;">
+                 <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/linkedin.png" alt="LinkedIn" style="width: 20px; height: 20px; vertical-align: middle;">
+             </a>
+         </td>
+     </tr>
+ </table>`;
+         }
         
                  function gerarAssinaturaSimples() {
              const nome = document.getElementById('nome').value;
@@ -329,58 +315,26 @@
              
              const whatsappClean = whatsapp.replace(/\D/g, '');
              
-             return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: white; border-radius: 12px; border-left: 4px solid #1a365d; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 400px; margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+             return `<table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, sans-serif; font-size: 14px;">
      <tr>
-         <td style="padding: 20px; vertical-align: top; border: none;">
-             <div style="font-size: 18px; font-weight: bold; color: #1a365d; margin: 0 0 6px 0; line-height: 1.2; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">${nome}</div>
-             <div style="font-size: 14px; color: #666666; margin: 0 0 16px 0; line-height: 1.3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">${funcao}</div>
-             
-             <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 0;">
-                 <tr>
-                     <td style="padding: 0 0 4px 0; vertical-align: top; border: none;">
-                         <span style="font-size: 12px; color: #333333; line-height: 1.5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">📞</span>
-                     </td>
-                     <td style="padding: 0 0 4px 8px; vertical-align: top; border: none;">
-                         <span style="font-size: 12px; color: #333333; line-height: 1.5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">${telefonesTexto}</span>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td style="padding: 0 0 4px 0; vertical-align: top; border: none;">
-                         <span style="font-size: 12px; color: #333333; line-height: 1.5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">✉️</span>
-                     </td>
-                     <td style="padding: 0 0 4px 8px; vertical-align: top; border: none;">
-                         <a href="mailto:${email}" style="color: #1a365d; text-decoration: none; font-size: 12px; line-height: 1.5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">${email}</a>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td style="padding: 0 0 4px 0; vertical-align: top; border: none;">
-                         <span style="font-size: 12px; color: #333333; line-height: 1.5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">🌐</span>
-                     </td>
-                     <td style="padding: 0 0 4px 8px; vertical-align: top; border: none;">
-                         <a href="https://pvtsoftware.com.br" style="color: #1a365d; text-decoration: none; font-size: 12px; line-height: 1.5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">pvtsoftware.com.br</a>
-                     </td>
-                 </tr>
-             </table>
-             
-             <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 16px 0 0 0;">
-                 <tr>
-                     <td style="padding: 0 8px 0 0; vertical-align: middle; border: none;">
-                         <a href="https://wa.me/${whatsappClean}" style="text-decoration: none; display: inline-block; width: 28px; height: 28px; background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; text-align: center; line-height: 26px;">
-                             <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/whatsapp.png" alt="WhatsApp" style="width: 16px; height: 16px; vertical-align: middle; border: none; display: inline-block;">
-                         </a>
-                     </td>
-                     <td style="padding: 0 8px 0 0; vertical-align: middle; border: none;">
-                         <a href="https://www.instagram.com/pvtsoftware/" style="text-decoration: none; display: inline-block; width: 28px; height: 28px; background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; text-align: center; line-height: 26px;">
-                             <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/instagram.png" alt="Instagram" style="width: 16px; height: 16px; vertical-align: middle; border: none; display: inline-block;">
-                         </a>
-                     </td>
-                     <td style="padding: 0; vertical-align: middle; border: none;">
-                         <a href="https://www.linkedin.com/company/pvtsoftware/" style="text-decoration: none; display: inline-block; width: 28px; height: 28px; background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; text-align: center; line-height: 26px;">
-                             <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/linkedin.png" alt="LinkedIn" style="width: 16px; height: 16px; vertical-align: middle; border: none; display: inline-block;">
-                         </a>
-                     </td>
-                 </tr>
-             </table>
+         <td style="padding-right: 12px; vertical-align: top; text-align: center;">
+             <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/pvt.png".png" alt="PVT Software" style="width: 110px; height: auto; display: block; margin: 0 auto;">
+         </td>
+         <td style="vertical-align: top; line-height: 1.4;">
+             <strong style="color: #1a365d; font-size: 14px; display: block; margin: 0 0 2px 0;">${nome.toUpperCase()}</strong>
+             <span style="color: #666; font-size: 11px; display: block; margin: 0 0 6px 0;">${funcao.toUpperCase()}</span>
+             <span style="color: #333; font-size: 11px; display: block; margin: 0 0 1px 0;">${telefonesTexto}</span>
+             <a href="https://pvtsoftware.com.br" style="color: #1a365d; text-decoration: underline; font-size: 11px; display: block; margin: 0 0 1px 0;">https://pvtsoftware.com.br/</a>
+             <a href="mailto:${email}" style="color: #1a365d; text-decoration: underline; font-size: 11px; display: block; margin: 0 0 6px 0;">${email}</a>
+             <a href="https://wa.me/${whatsappClean}" style="text-decoration: none; margin-right: 6px;">
+                 <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/whatsapp.png" alt="WhatsApp" style="width: 16px; height: 16px; vertical-align: middle;">
+             </a>
+             <a href="https://www.instagram.com/pvtsoftware/" style="text-decoration: none; margin-right: 6px;">
+                 <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/instagram.png" alt="Instagram" style="width: 16px; height: 16px; vertical-align: middle;">
+             </a>
+             <a href="https://www.linkedin.com/company/pvtsoftware/" style="text-decoration: none;">
+                 <img src="https://raw.githubusercontent.com/pedromedici-uvv/pvt-imagens/master/imagens/linkedin.png" alt="LinkedIn" style="width: 16px; height: 16px; vertical-align: middle;">
+             </a>
          </td>
      </tr>
  </table>`;

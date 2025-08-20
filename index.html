@@ -275,29 +275,43 @@
              
              const whatsappClean = whatsapp.replace(/\D/g, '');
              
-             return `<table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, sans-serif; font-size: 14px;">
-     <tr>
-         <td style="padding-right: 15px; vertical-align: top; text-align: center;">
-             <img src="https://pvtsoftware.sharepoint.com/sites/PvtSoftware/Documentos%20Compartilhados/DOCUMENTOS%20UTEIS/pvt.png?csf=1&web=1&e=b04JbC&CID=1d36c322-9071-4e0f-9f1e-3e9821aaa3a5" alt="PVT Software" style="width: 150px; height: auto; display: block; margin: 0 auto;">
-         </td>
-         <td style="vertical-align: top; line-height: 1.4; padding: 5px 0;">
-             <strong style="color: #1a365d; font-size: 16px; display: block; margin: 0 0 8px 0;">${nome.toUpperCase()}</strong>
-             <span style="color: #666; font-size: 12px; display: block; margin: 0 0 8px 0;">${funcao.toUpperCase()}</span>
-             <span style="color: #333; font-size: 12px; display: block; margin: 0 0 4px 0;">${telefonesTexto}</span>
-             <a href="https://pvtsoftware.com.br" style="color: #1a365d; text-decoration: underline; font-size: 12px; display: block; margin: 0 0 4px 0;">https://pvtsoftware.com.br/</a>
-             <a href="mailto:${email}" style="color: #1a365d; text-decoration: underline; font-size: 12px; display: block; margin: 0 0 12px 0;">${email}</a>
-             <a href="https://wa.me/${whatsappClean}" style="text-decoration: none; margin-right: 10px;">
-                 <img src="https://pvtsoftware.sharepoint.com/sites/PvtSoftware/Documentos%20Compartilhados/DOCUMENTOS%20UTEIS/whatsapp.png?csf=1&web=1&e=vSWwYz&CID=309217e4-57b7-4e30-b3ce-d510cb8f9aa3" alt="WhatsApp" style="width: 20px; height: 20px; vertical-align: middle;">
-             </a>
-             <a href="https://www.instagram.com/pvtsoftware/" style="text-decoration: none; margin-right: 10px;">
-                 <img src="https://pvtsoftware.sharepoint.com/sites/PvtSoftware/Documentos%20Compartilhados/DOCUMENTOS%20UTEIS/instagram.png?csf=1&web=1&e=VfV8pA&CID=dbbc33d4-4479-4c08-b3a2-531f1f5512e8" alt="Instagram" style="width: 20px; height: 20px; vertical-align: middle;">
-             </a>
-             <a href="https://www.linkedin.com/company/pvtsoftware/" style="text-decoration: none;">
-                 <img src="https://pvtsoftware.sharepoint.com/sites/PvtSoftware/Documentos%20Compartilhados/DOCUMENTOS%20UTEIS/linkedin.png?csf=1&web=1&e=lbjfSf&CID=982c2c25-ca51-49c7-a222-9c4a55b44419" alt="LinkedIn" style="width: 20px; height: 20px; vertical-align: middle;">
-             </a>
-         </td>
-     </tr>
- </table>`;
+             return `<table cellpadding="0" cellspacing="0" border="0" width="600" style="font-family: Arial, sans-serif; color:#000;">
+  <tr>
+    <!-- Coluna Esquerda (Logo PVT) -->
+    <td width="180" align="center" valign="middle" style="padding:10px;">
+      <img src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/logo-pvt.png" alt="PVT" width="120" style="display:block;">
+    </td>
+
+    <!-- Coluna Centro (Informações do Colaborador) -->
+    <td width="270" valign="middle" style="padding:10px;">
+      <p style="margin:0; font-size:16px; font-weight:bold; color:#000;">
+        NOME COLABORADOR
+      </p>
+      <p style="margin:0; font-size:14px; color:#555;">
+        Cargo do Colaborador
+      </p>
+      <p style="margin:0; font-size:13px; color:#555;">
+        (27) 9999-9999 / (27) 3333-3333
+      </p>
+      <p style="margin:0; font-size:13px; color:#555;">
+        <a href="mailto:colaborador@pvtsoftware.com.br" style="color:#0078d7; text-decoration:none;">
+          colaborador@pvtsoftware.com.br
+        </a>
+      </p>
+      <p style="margin:0; font-size:13px; color:#555;">
+        <a href="https://pvtsoftware.com.br" style="color:#0078d7; text-decoration:none;">
+          www.pvtsoftware.com.br
+        </a>
+      </p>
+    </td>
+
+    <!-- Coluna Direita (Canal Homologado) -->
+    <td width="180" align="center" valign="middle" style="padding:10px;">
+      <img src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/canal-homologado.png" alt="Canal Homologado TOTVS" width="180" style="display:block;">
+      <!-- <img src="canal-homologado.png" alt="Canal Homologado TOTVS" width="180" style="display:block;"> -->
+    </td>
+  </tr>
+</table>`;
          }
         
                  function gerarAssinaturaSimples() {

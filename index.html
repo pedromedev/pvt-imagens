@@ -208,12 +208,12 @@
         
         <div class="form-group">
             <label for="celular">Celular:</label>
-            <input type="text" id="celular" value="(27) 9999-9999" onchange="atualizarAssinatura()">
+            <input type="text" id="celular" value="(27) 99999-9999" oninput="formatarCelular(this)" onchange="atualizarAssinatura()" placeholder="(27) 99999-9999">
         </div>
         
         <div class="form-group">
             <label for="telefone">Tel. Fixo:</label>
-            <input type="text" id="telefone" value="(27) 3333-3333" onchange="atualizarAssinatura()">
+            <input type="text" id="telefone" value="(27) 3333-3333" oninput="formatarTelefone(this)" onchange="atualizarAssinatura()" placeholder="(27) 3333-3333">
         </div>
         
         <div class="form-group">
@@ -260,138 +260,189 @@
     <script>
         let tipoAssinatura = 'completa';
         
-                 function gerarAssinaturaCompleta() {
-                    const nome = document.getElementById('nome').value;
-                    const funcao = document.getElementById('funcao').value;
-                    const email = document.getElementById('email').value;
-                    const celular = document.getElementById('celular').value;
-                    const telefone = document.getElementById('telefone').value;
-                    const whatsapp = document.getElementById('whatsapp').value;
-                    
-                    let telefones = [];
-                    if (celular) telefones.push(celular);
-                    if (telefone && telefone !== celular) telefones.push(telefone);
-                    const telefonesTexto = telefones.join(' / ');
-                    
-                    const whatsappClean = whatsapp.replace(/\D/g, '');
-             
-             return `<table cellpadding="0" cellspacing="0" border="0" width="600" 
-                            style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse; background-color: white;">
-                        <tr>
-                            <!-- Coluna Esquerda (Logo PVT) -->
-                            <td width="120" align="center" valign="middle" style="margin:0; padding:0;">
-                                <a href="https://pvtsoftware.com.br" target="_blank">
-                                    <img
-                                        src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/logo-pvt.png"
-                                        alt="PVT" width="120" style="display:block; border:0; margin:0; padding:0;"
-                                    >
-                                </a>
-                            </td>
-
-                            <!-- Coluna Centro (Informações do Colaborador) -->
-                            <td width="270" valign="middle" style="margin:0; padding:0;">
-                            <p style="margin:0; font-size:16px; font-weight:bold; color:#000;">
-                                ${nome.toUpperCase()}
-                            </p>
-                            <p style="margin:0; font-size:14px; color:#555;">
-                                ${funcao.toUpperCase()}
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="https://wa.me/${whatsappClean}" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                    ${celular} 
-                                </a>
-                                / 
-                                ${telefone}
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="mailto:${email}" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                    ${email}
-                                </a>
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="https://pvtsoftware.com.br" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                www.pvtsoftware.com.br
-                                </a>
-                            </p>
-                            </td>
-
-                            <!-- Coluna Direita (Canal Homologado) -->
-                            <td width="180" align="center" valign="middle" style="margin:0; padding:0;">
-                            <a href="https://homologacaoecertificacao.totvs.com/document/pvt-software-e-servicos-ltda" target="_blank">
-                                <img
-                                src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/canal-homologado.png"
-                                alt="Canal Homologado TOTVS" width="180" style="display:block; border:0; margin:0; padding:0;">
-                            </a>
-                            </td>
-                        </tr>
-                        </table>`;
-         }
+        // Função para formatar celular (27) 99999-9999
+        function formatarCelular(input) {
+            let valor = input.value.replace(/\D/g, '');
+            
+            if (valor.length > 11) {
+                valor = valor.substring(0, 11);
+            }
+            
+            if (valor.length === 0) {
+                input.value = '';
+                return;
+            }
+            
+            // Aplicar formatação baseada no tamanho
+            if (valor.length <= 2) {
+                input.value = `(${valor}`;
+            } else if (valor.length <= 7) {
+                input.value = `(${valor.substring(0, 2)}) ${valor.substring(2)}`;
+            } else {
+                input.value = `(${valor.substring(0, 2)}) ${valor.substring(2, 7)}-${valor.substring(7)}`;
+            }
+            
+            // Atualizar WhatsApp se estiver sincronizado
+            if (document.getElementById('whatsappIgualCelular').checked) {
+                atualizarWhatsapp();
+            }
+        }
         
-                 function gerarAssinaturaSimples() {
-             const nome = document.getElementById('nome').value;
-             const funcao = document.getElementById('funcao').value;
-             const email = document.getElementById('email').value;
-             const celular = document.getElementById('celular').value;
-             const telefone = document.getElementById('telefone').value;
-             const whatsapp = document.getElementById('whatsapp').value;
-             
-             let telefones = [];
-             if (celular) telefones.push(celular);
-             if (telefone && telefone !== celular) telefones.push(telefone);
-             const telefonesTexto = telefones.join(' / ');
-             
-             const whatsappClean = whatsapp.replace(/\D/g, '');
-             
-             return `<table cellpadding="0" cellspacing="0" border="0" width="600" 
-                            style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse; background-color: white;">
-                        <tr>
-                            <!-- Coluna Esquerda (Logo PVT) -->
-                            <td width="120" align="center" valign="middle" style="margin:0; padding:0;">
-                                <a href="https://pvtsoftware.com.br" target="_blank">
-                                    <img
-                                        src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/logo-pvt.png"
-                                        alt="PVT" width="120" style="display:block; border:0; margin:0; padding:0;"
-                                    >
-                                </a>
-                            </td>
+        // Função para formatar telefone fixo (27) 3333-3333
+        function formatarTelefone(input) {
+            let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            
+            if (valor.length > 10) {
+                valor = valor.substring(0, 10);
+            }
+            
+            if (valor.length === 0) {
+                input.value = '';
+                return;
+            }
+            
+            // Aplicar formatação baseada no tamanho
+            if (valor.length <= 2) {
+                input.value = `(${valor}`;
+            } else if (valor.length <= 6) {
+                input.value = `(${valor.substring(0, 2)}) ${valor.substring(2)}`;
+            } else {
+                input.value = `(${valor.substring(0, 2)}) ${valor.substring(2, 6)}-${valor.substring(6)}`;
+            }
+        }
+        
+        function gerarAssinaturaCompleta() {
+            const nome = document.getElementById('nome').value;
+            const funcao = document.getElementById('funcao').value;
+            const email = document.getElementById('email').value;
+            const celular = document.getElementById('celular').value;
+            const telefone = document.getElementById('telefone').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            
+            let telefones = [];
+            if (celular) telefones.push(celular);
+            if (telefone && telefone !== celular) telefones.push(telefone);
+            const telefonesTexto = telefones.join(' / ');
+            
+            const whatsappClean = whatsapp.replace(/\D/g, '');
+     
+     return `<table cellpadding="0" cellspacing="0" border="0" width="600" 
+                    style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse; background-color: white;">
+                <tr>
+                    <!-- Coluna Esquerda (Logo PVT) -->
+                    <td width="120" align="center" valign="middle" style="margin:0; padding:0;">
+                        <a href="https://pvtsoftware.com.br" target="_blank">
+                            <img
+                                src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/logo-pvt.png"
+                                alt="PVT" width="120" style="display:block; border:0; margin:0; padding:0;"
+                            >
+                        </a>
+                    </td>
 
-                            <!-- Coluna Centro (Informações do Colaborador) -->
-                            <td width="270" valign="middle" style="margin:0; padding:0;">
-                            <p style="margin:0; font-size:16px; font-weight:bold; color:#000;">
-                                ${nome.toUpperCase()}
-                            </p>
-                            <p style="margin:0; font-size:14px; color:#555;">
-                                ${funcao.toUpperCase()}
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="https://wa.me/${whatsappClean}" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                    ${celular} 
-                                </a>
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="mailto:${email}" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                    ${email}
-                                </a>
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="https://pvtsoftware.com.br" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                www.pvtsoftware.com.br
-                                </a>
-                            </p>
-                            </td>
+                    <!-- Coluna Centro (Informações do Colaborador) -->
+                    <td width="270" valign="middle" style="margin:0; padding:0;">
+                    <p style="margin:0; font-size:16px; font-weight:bold; color:#000;">
+                        ${nome.toUpperCase()}
+                    </p>
+                    <p style="margin:0; font-size:14px; color:#555;">
+                        ${funcao.toUpperCase()}
+                    </p>
+                    <p style="margin:0; font-size:13px; color:#555;">
+                        <a href="https://wa.me/${whatsappClean}" target="_blank" style="color:#0078d7; text-decoration:none;">
+                            ${celular} 
+                        </a>
+                        / 
+                        ${telefone}
+                    </p>
+                    <p style="margin:0; font-size:13px; color:#555;">
+                        <a href="mailto:${email}" target="_blank" style="color:#0078d7; text-decoration:none;">
+                            ${email}
+                        </a>
+                    </p>
+                    <p style="margin:0; font-size:13px; color:#555;">
+                        <a href="https://pvtsoftware.com.br" target="_blank" style="color:#0078d7; text-decoration:none;">
+                        www.pvtsoftware.com.br
+                        </a>
+                    </p>
+                    </td>
 
-                            <!-- Coluna Direita (Canal Homologado) -->
-                            <td width="180" align="center" valign="middle" style="margin:0; padding:0;">
-                            <a href="https://homologacaoecertificacao.totvs.com/document/pvt-software-e-servicos-ltda" target="_blank">
-                                <img
-                                src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/canal-homologado.png"
-                                alt="Canal Homologado TOTVS" width="180" style="display:block; border:0; margin:0; padding:0;">
-                            </a>
-                            </td>
-                        </tr>
-                        </table>`;
+                    <!-- Coluna Direita (Canal Homologado) -->
+                    <td width="180" align="center" valign="middle" style="margin:0; padding:0;">
+                    <a href="https://homologacaoecertificacao.totvs.com/document/pvt-software-e-servicos-ltda" target="_blank">
+                        <img
+                        src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/canal-homologado.png"
+                        alt="Canal Homologado TOTVS" width="180" style="display:block; border:0; margin:0; padding:0;">
+                    </a>
+                    </td>
+                </tr>
+                </table>`;
+ }
+        
+        function gerarAssinaturaSimples() {
+     const nome = document.getElementById('nome').value;
+     const funcao = document.getElementById('funcao').value;
+     const email = document.getElementById('email').value;
+     const celular = document.getElementById('celular').value;
+     const telefone = document.getElementById('telefone').value;
+     const whatsapp = document.getElementById('whatsapp').value;
+     
+     let telefones = [];
+     if (celular) telefones.push(celular);
+     if (telefone && telefone !== celular) telefones.push(telefone);
+     const telefonesTexto = telefones.join(' / ');
+     
+     const whatsappClean = whatsapp.replace(/\D/g, '');
+     
+     return `<table cellpadding="0" cellspacing="0" border="0" width="600" 
+                    style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse; background-color: white;">
+                <tr>
+                    <!-- Coluna Esquerda (Logo PVT) -->
+                    <td width="120" align="center" valign="middle" style="margin:0; padding:0;">
+                        <a href="https://pvtsoftware.com.br" target="_blank">
+                            <img
+                                src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/logo-pvt.png"
+                                alt="PVT" width="120" style="display:block; border:0; margin:0; padding:0;"
+                            >
+                        </a>
+                    </td>
 
-         }
+                    <!-- Coluna Centro (Informações do Colaborador) -->
+                    <td width="270" valign="middle" style="margin:0; padding:0;">
+                    <p style="margin:0; font-size:16px; font-weight:bold; color:#000;">
+                        ${nome.toUpperCase()}
+                    </p>
+                    <p style="margin:0; font-size:14px; color:#555;">
+                        ${funcao.toUpperCase()}
+                    </p>
+                    <p style="margin:0; font-size:13px; color:#555;">
+                        <a href="https://wa.me/${whatsappClean}" target="_blank" style="color:#0078d7; text-decoration:none;">
+                            ${celular} 
+                        </a>
+                    </p>
+                    <p style="margin:0; font-size:13px; color:#555;">
+                        <a href="mailto:${email}" target="_blank" style="color:#0078d7; text-decoration:none;">
+                            ${email}
+                        </a>
+                    </p>
+                    <p style="margin:0; font-size:13px; color:#555;">
+                        <a href="https://pvtsoftware.com.br" target="_blank" style="color:#0078d7; text-decoration:none;">
+                        www.pvtsoftware.com.br
+                        </a>
+                    </p>
+                    </td>
+
+                    <!-- Coluna Direita (Canal Homologado) -->
+                    <td width="180" align="center" valign="middle" style="margin:0; padding:0;">
+                    <a href="https://homologacaoecertificacao.totvs.com/document/pvt-software-e-servicos-ltda" target="_blank">
+                        <img
+                        src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/canal-homologado.png"
+                        alt="Canal Homologado TOTVS" width="180" style="display:block; border:0; margin:0; padding:0;">
+                    </a>
+                    </td>
+                </tr>
+                </table>`;
+
+ }
         
         function atualizarAssinatura() {
             const preview = document.getElementById('signature-preview');

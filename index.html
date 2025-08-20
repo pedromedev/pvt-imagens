@@ -276,7 +276,7 @@
                     const whatsappClean = whatsapp.replace(/\D/g, '');
              
              return `<table cellpadding="0" cellspacing="0" border="0" width="600" 
-                            style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse;">
+                            style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse; background-color: white;">
                         <tr>
                             <!-- Coluna Esquerda (Logo PVT) -->
                             <td width="120" align="center" valign="middle" style="margin:0; padding:0;">
@@ -340,7 +340,7 @@
              const whatsappClean = whatsapp.replace(/\D/g, '');
              
              return `<table cellpadding="0" cellspacing="0" border="0" width="600" 
-                            style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse;">
+                            style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse; background-color: white;">
                         <tr>
                             <!-- Coluna Esquerda (Logo PVT) -->
                             <td width="120" align="center" valign="middle" style="margin:0; padding:0;">
@@ -436,7 +436,6 @@
             tempDiv.innerHTML = preview.innerHTML;
             tempDiv.style.position = 'absolute';
             tempDiv.style.left = '-9999px';
-            tempDiv.style.backgroundColor = 'white'
             document.body.appendChild(tempDiv);
             
             // Selecionar o conteúdo

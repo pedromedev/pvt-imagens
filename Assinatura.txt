@@ -1,0 +1,7 @@
+pedido:
+
+Bruna pede que seja feito uma forma mais interessante de identificar os emails, o fato da imagem com a logo sumir deixa
+um email com longas trocas muito dificil de identificar.
+
+desenvolver uma pagina "linktree" e utilizar somente a imagem para o email.
+desenvolver um texto alternativo chamativo e eficiente para a troca de emails e identificação. (não funciona)

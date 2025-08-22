@@ -225,19 +225,7 @@
         
         <div class="form-group">
             <label for="telefone">Tel. Fixo:</label>
-            <input type="text" id="telefone" placeholder="(27) 3333-3333" oninput="formatarTelefone(this)" onchange="atualizarAssinatura()" >
-        </div>
-        
-        <div class="form-group">
-            <div class="checkbox-group">
-                <input type="checkbox" id="whatsappIgualCelular" checked onchange="atualizarWhatsapp()">
-                <label for="whatsappIgualCelular">Usar o mesmo celular como WhatsApp</label>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label for="whatsapp">WhatsApp:</label>
-            <input type="text" id="whatsapp" value="5527999999999" onchange="atualizarAssinatura()">
+            <input type="text" id="telefone" placeholder="(27) 3333-3333" value="" oninput="formatarTelefone(this)" onchange="atualizarAssinatura()" >
         </div>
     </div>
 
@@ -263,7 +251,7 @@
         
         <div class="form-group">
             <label for="link">Link gerado: <span style="color: red;">*</span></label>
-            <input type="link" id="link" value="colaborador@pvtsoftware.com.br" onchange="atualizarAssinatura()" required>
+            <input type="link" id="link" value="https://ojotape05.github.io" onchange="atualizarAssinatura()" required>
         </div>
 
         <div id="signature-preview"></div>
@@ -276,6 +264,34 @@
 
     <script>
         let tipoAssinatura = 'completa';
+        let whatsapp = '';
+        let telefone_formatado = '';
+
+        function getColaboradorInfos() {
+            const nome = document.getElementById('nome').value;
+            const funcao = document.getElementById('funcao').value;
+            const email = document.getElementById('email').value;
+            const celular = document.getElementById('celular').value;
+            const telefone = document.getElementById('telefone').value;
+        
+            return { nome, funcao, email, celular, telefone, whatsapp }
+        }
+
+        function gerarLink() {
+            const campoLink = document.getElementById('link')
+            const url = new URL('https://ojotape05.github.io/')
+            const params = new URLSearchParams(url.search)
+
+            const { email, whatsapp, telefone } = getColaboradorInfos()
+
+            params.append('whatsapp', whatsapp)
+            params.append('email', email)
+            params.append('telefone', telefone_formatado)
+
+            const newUrl = `${url}?${params}`
+
+            campoLink.value = newUrl
+        }
         
         // Função para formatar celular (27) 99999-9999
         function formatarCelular(input) {
@@ -301,10 +317,9 @@
                 input.value = `(${valor.substring(0, 2)}) ${valor.substring(2, 7)}-${valor.substring(7)}`;
             }
             
-            // Atualizar WhatsApp se estiver sincronizado
-            if (document.getElementById('whatsappIgualCelular').checked) {
-                atualizarWhatsapp();
-            }
+
+            atualizarWhatsapp();
+
         }
         
         // Função para formatar telefone fixo (27) 3333-3333
@@ -333,12 +348,8 @@
         }
         
         function gerarAssinaturaCompleta() {
-            const nome = document.getElementById('nome').value;
-            const funcao = document.getElementById('funcao').value;
-            const email = document.getElementById('email').value;
-            const celular = document.getElementById('celular').value;
-            const telefone = document.getElementById('telefone').value;
-            const whatsapp = document.getElementById('whatsapp').value;
+
+            const { nome, funcao, email, celular, telefone, whatsapp } = getColaboradorInfos()
             
             let telefones = [];
             if (celular) telefones.push(celular);
@@ -400,12 +411,7 @@
  }
         
         function gerarAssinaturaSimples() {
-            const nome = document.getElementById('nome').value;
-            const funcao = document.getElementById('funcao').value;
-            const email = document.getElementById('email').value;
-            const celular = document.getElementById('celular').value;
-            const telefone = document.getElementById('telefone').value;
-            const whatsapp = document.getElementById('whatsapp').value;
+            const { nome, funcao, email, celular, telefone, whatsapp } = getColaboradorInfos()
             
             let telefones = [];
             if (celular) telefones.push(celular);
@@ -467,6 +473,8 @@
         
         function atualizarAssinatura() {
             const preview = document.getElementById('signature-preview');
+
+            gerarLink()
             
             if (tipoAssinatura === 'completa') {
                 preview.innerHTML = gerarAssinaturaCompleta();
@@ -476,17 +484,20 @@
         }
         
         function atualizarWhatsapp() {
-            const checkbox = document.getElementById('whatsappIgualCelular');
-            const celular = document.getElementById('celular').value;
-            const whatsappInput = document.getElementById('whatsapp');
-            
-            if (checkbox.checked) {
-                const celularNumeros = celular.replace(/\D/g, '');
-                whatsappInput.value = '55' + celularNumeros;
-                whatsappInput.disabled = true;
-            } else {
-                whatsappInput.disabled = false;
-            }
+            const { celular } = getColaboradorInfos()
+
+            const celularNumeros = celular.replace(/\D/g, '');
+            whatsapp= '55' + celularNumeros;
+
+            atualizarAssinatura();
+        }
+
+        function atualizarTelefoneFormatado(){
+            const { telefone } = getColaboradorInfos()
+
+            const telefoneNumeros = telefone.replace(/\D/g, '');
+            telefone_formatado= '55' + telefoneNumeros;
+
             atualizarAssinatura();
         }
         
@@ -507,10 +518,8 @@
         }
         
         function validarCamposObrigatorios() {
-            const nome = document.getElementById('nome').value.trim();
-            const funcao = document.getElementById('funcao').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const celular = document.getElementById('celular').value.trim();
+
+            const { nome, funcao, email, celular } = getColaboradorInfos()
             
             const camposVazios = [];
             
@@ -614,13 +623,17 @@
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
             atualizarWhatsapp();
+            atualizarTelefoneFormatado();
             atualizarAssinatura();
             
             // Listener para mudanças no celular
             document.getElementById('celular').addEventListener('input', function() {
-                if (document.getElementById('whatsappIgualCelular').checked) {
-                    atualizarWhatsapp();
-                }
+                atualizarWhatsapp();
+            });
+
+            // Listener para mudanças no celular
+            document.getElementById('telefone').addEventListener('input', function() {
+                atualizarTelefoneFormatado();
             });
         });
 

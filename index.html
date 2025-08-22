@@ -230,12 +230,15 @@
     </div>
 
     <div class="info-card">
+        <h1 style="display: flex; justify-content: center;"> ⚠️ INSTRUÇÕES </h1>
         <div class="info-card-content">
-            <h3>💡 Como Copiar Corretamente</h3>
-            <p><strong>1.</strong> Clique no botão <span class="highlight">"Copiar Assinatura"</span> abaixo<br>
-            <strong>2.</strong> Vá para as configurações de assinatura do seu email<br>
-            <strong>3.</strong> Cole usando <span class="highlight">Ctrl+V</span> (mantenha a formatação)<br>
-            <strong>⚠️</strong> <em>IMPORTANTE:</em> Use "Colar" normal, não "Colar como texto"</p>
+            <h3>💡 Como configurar Corretamente</h3>
+            <p>
+                <strong>1.</strong> Preencha o formulário acima<br>
+                <strong>2.</strong> Clique no botão <span class="highlight">"Baixar Assinatura PNG"</span> abaixo<br>
+                <strong>3.</strong> Copie o link gerado abaixo<br>
+                <strong>4.</strong> Siga as instruções do PDF: <a href="./Guia de configuração da assinatura outlook.pdf" class="highlight">Configurar assinatura</a>
+            </p>
         </div>
     </div>
 
@@ -244,8 +247,8 @@
         
         <div class="signature-controls">
             <div class="signature-toggle">
-                <button id="btn-completa" class="active" onclick="trocarAssinatura('completa')">Completa</button>
-                <button id="btn-simples" onclick="trocarAssinatura('simples')">Simplificada</button>
+                <button id="btn-completa" onclick="trocarAssinatura('completa')">Completa</button>
+                <button id="btn-simples" class="active" onclick="trocarAssinatura('simples')">Simplificada</button>
             </div>
         </div>
         
@@ -257,13 +260,13 @@
         <div id="signature-preview"></div>
         
         <div class="botoes">
-            <button class="btn" onclick="baixarAssinaturaPNGAlternativa()">📋 Baixar Assinatura</button>
+            <button class="btn" onclick="baixarAssinaturaPNGAlternativa()">📋 Baixar Assinatura PNG</button>
             <button class="btn" onclick="baixarHTML()">📁 Download HTML</button>
         </div>
     </div>
 
     <script>
-        let tipoAssinatura = 'completa';
+        let tipoAssinatura = 'simples';
         let whatsapp = '';
         let telefone_formatado = '';
 
@@ -507,9 +510,11 @@
             const btnSimples = document.getElementById('btn-simples');
             
             if (tipo === 'completa') {
+                document.getElementById('telefone').required = true
                 btnCompleta.classList.add('active');
                 btnSimples.classList.remove('active');
             } else {
+                document.getElementById('telefone').required = false
                 btnCompleta.classList.remove('active');
                 btnSimples.classList.add('active');
             }

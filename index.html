@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <title>Assinatura de Email - PVT Software</title>
     <style>
@@ -252,7 +254,7 @@
         <div id="signature-preview"></div>
         
         <div class="botoes">
-            <button class="btn" onclick="baixarAssinaturaPNGAlternativa()">📋 Baixar Assinatura PNG</button>
+            <button class="btn" onclick="baixarAssinatura()">📋 Baixar Assinatura PNG</button>
             <button class="btn" onclick="baixarHTML()">📁 Download HTML</button>
         </div>
     </div>
@@ -460,7 +462,7 @@
             //             </div>
             //         </div>`;
 
-            return `<div id='assinatura-simples' style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT-2.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 147px;width: 613px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
+            return `<div id='assinatura-simples' style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT-3.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 147px;width: 613px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
                         <div style="position: absolute; left: 34%; top: 15%; width: 43%; height: 70%; display: flex; flex-direction: column; justify-content: space-between;">
                             <div style="display: flex;flex-direction: column;margin-bottom: 2px;">
                                 <span style="color: #000000;font-weight: bold;font-size: 19px;margin-bottom: 0.5;">NOME DO COLABORADOR</span>
@@ -678,6 +680,32 @@
             );
         };
 
+        async function baixarAssinatura() {
+
+            if (!validarCamposObrigatorios()) {
+                return;
+            }
+            
+            const format = 'png'
+
+            const node = document.getElementById('assinatura-simples')
+            node.style.margin = 0
+
+            try {
+
+                const dataUrl = await htmlToImage.toPng(node,{
+                    cacheBust: true,
+                    pixelRatio: 1,
+                });
+                saveAs(dataUrl, 'assinatura-email.png');
+            
+            } catch (err) {
+                console.error('Erro ao gerar imagem:', err);
+            } finally {
+                node.style.margin = 'auto'
+            }
+        }
+    
        async function baixarAssinaturaPNGAlternativa() {
             if (!validarCamposObrigatorios()) {
                 return;

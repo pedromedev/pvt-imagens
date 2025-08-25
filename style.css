@@ -1,0 +1,89 @@
+.a {
+  background-color: transparent;
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  width: 100vw;
+}
+
+.a .div {
+  overflow: hidden;
+  background: linear-gradient(
+    249deg,
+    rgba(53, 52, 53, 1) 40%,
+    rgba(255, 255, 255, 1) 40%
+  );
+  width: 460.0px;
+  height: 110.0px;
+  position: relative;
+}
+
+.a .overlap-group {
+  position: absolute;
+  width: 73px;
+  height: 121px;
+  top: 334px;
+  left: 19px;
+}
+
+.a .line {
+  position: absolute;
+  width: 1px;
+  height: 73px;
+  top: -36px;
+  left: 36px;
+  transform: rotate(90.00deg);
+  object-fit: cover;
+}
+
+.a .pvt-software-e {
+  position: absolute;
+  width: 112px;
+  height: 62px;
+  top: 34px;
+  left: -20px;
+  transform: rotate(90.00deg);
+  aspect-ratio: 1.82;
+  object-fit: cover;
+}
+
+.a .logo-pvt-branca {
+  position: absolute;
+  width: 142px;
+  height: 38px;
+  top: 47px;
+  left: -16px;
+  transform: rotate(90.00deg);
+}
+
+.a .LOGO {
+  position: absolute;
+  width: 108px;
+  height: 38px;
+  top: 0;
+  left: 17px;
+}
+
+.a .NOME-COLABORADOR {
+  position: absolute;
+  top: 196px;
+  left: -39px;
+  transform: rotate(90.00deg);
+  font-family: "Roboto-Bold", Helvetica;
+  font-weight: 400;
+  color: transparent;
+  font-size: 10px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.a .text-wrapper {
+  font-weight: 700;
+  color: #000000;
+}
+
+.a .span {
+  font-family: "Roboto-Regular", Helvetica;
+  color: #4f4f4f;
+  font-size: 9px;
+}

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <title>Assinatura de Email - PVT Software</title>
     <style>
         body {
@@ -74,7 +75,7 @@
         }
         
         .preview-container {
-            max-width: 650px;
+            max-width: 980px;
             margin: 0 auto;
             background: white;
             padding: 30px;
@@ -200,16 +201,6 @@
             <label for="funcao">Função: <span style="color: red;">*</span></label>
             <select id="funcao" onchange="atualizarAssinatura()" required>
                 <option value="">Selecione função</option>
-                <option value="Desenvolvedor">Desenvolvedor</option>
-                <option value="Comercial">Comercial</option>
-                <option value="Diretoria">Diretoria</option>
-                <option value="Gestão de Operações">Gestão de Operações</option>
-                <option value="Gestão Administrativa">Gestão Administrativa</option>
-                <option value="Faturamento e Financeiro">Faturamento e Financeiro</option>
-                <option value="Gente e Gestão">Gente e Gestão</option>
-                <option value="PMO">PMO</option>
-                <option value="Serviços (Analista)">Serviços (Analista)</option>
-                <option value="Projetos">Projetos</option>
             </select>
         </div>
         
@@ -270,6 +261,58 @@
         let tipoAssinatura = 'simples';
         let whatsapp = '';
         let telefone_formatado = '';
+
+        function capitalizeFirstLetter(val) {
+            return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+        }
+
+        function getFuncoesOptions() {
+            const selectFuncao = document.getElementById('funcao')
+            
+            // Verificar se o elemento existe
+            if (!selectFuncao) {
+                console.error('Elemento com ID "select" não encontrado')
+                return
+            }
+            
+            const listaFuncoes = [
+                "CEO",
+                "Head de Serviços",
+                "Head de Operações Administrativas",
+                "Gestor de Portfólio de Projetos",
+                "Coordenador de Projetos",
+                "PMO",
+                "Consultor de Implantação",
+                "Desenvolvedor",
+                "Consultor de Relacionamento com Cliente (CX)",
+                "Executivo de Contas",
+                "Gestor Administrativo",
+                "Recursos e Alocações",
+                "Analista de Faturamento",
+                "Gente & Gestão"
+            ]
+
+            // Limpar opções existentes (exceto a primeira, se houver)
+            selectFuncao.innerHTML = ''
+            
+            // Adicionar opção padrão (opcional)
+            const defaultOption = document.createElement('option')
+            defaultOption.value = ''
+            defaultOption.textContent = 'Selecione uma função'
+            defaultOption.disabled = true
+            defaultOption.selected = true
+            selectFuncao.appendChild(defaultOption)
+
+            // Usar forEach ao invés de map e adicionar as opções ao select
+            listaFuncoes.forEach((funcao) => {
+                const option = document.createElement('option')
+                option.value = funcao
+                option.textContent = funcao
+                selectFuncao.appendChild(option) // Esta linha estava faltando!
+            })
+        }
+
+        getFuncoesOptions()
 
         function getColaboradorInfos() {
             const nome = document.getElementById('nome').value;
@@ -362,58 +405,29 @@
             
             const whatsappClean = whatsapp.replace(/\D/g, '');
      
-     return `<table id='assinatura-completa' cellpadding="0" cellspacing="0" border="0" width="600" 
-                    style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse; background-color: white;">
-                <tr>
-                    <!-- Coluna Esquerda (Logo PVT) -->
-                    <td width="120" align="center" valign="middle" style="margin:0; padding:0;">
-                        <a href="https://pvtsoftware.com.br" target="_blank">
-                            <img
-                                src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/logo-pvt.png"
-                                alt="PVT" width="120" style="display:block; border:0; margin:0; padding:0;"
-                            >
-                        </a>
-                    </td>
-
-                    <!-- Coluna Centro (Informações do Colaborador) -->
-                    <td width="270" valign="middle" style="margin:0; padding:0;">
-                    <p style="margin:0; font-size:16px; font-weight:bold; color:#000;">
-                        ${nome.toUpperCase()}
-                    </p>
-                    <p style="margin:0; font-size:14px; color:#555;">
-                        ${funcao.toUpperCase()}
-                    </p>
-                    <p style="margin:0; font-size:13px; color:#555;">
-                        <a href="https://wa.me/${whatsappClean}" target="_blank" style="color:#0078d7; text-decoration:none;">
-                            ${celular} 
-                        </a>
-                        / 
-                        ${telefone}
-                    </p>
-                    <p style="margin:0; font-size:13px; color:#555;">
-                        <a href="mailto:${email}" target="_blank" style="color:#0078d7; text-decoration:none;">
-                            ${email}
-                        </a>
-                    </p>
-                    <p style="margin:0; font-size:13px; color:#555;">
-                        <a href="https://pvtsoftware.com.br" target="_blank" style="color:#0078d7; text-decoration:none;">
-                        www.pvtsoftware.com.br
-                        </a>
-                    </p>
-                    </td>
-
-                    <!-- Coluna Direita (Canal Homologado) -->
-                    <td width="180" align="center" valign="middle" style="margin:0; padding:0;">
-                    <a href="https://homologacaoecertificacao.totvs.com/document/pvt-software-e-servicos-ltda" target="_blank">
-                        <img
-                        src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/canal-homologado.png"
-                        alt="Canal Homologado TOTVS" width="180" style="display:block; border:0; margin:0; padding:0;">
-                    </a>
-                    </td>
-                </tr>
-                </table>`;
- }
-        
+            return `<div id='assinatura-completa' style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 110px;width: 460px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
+                        <div style="position: absolute; left: 34%; top: 15%; width: 43%; height: 70%; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div style="display: flex;flex-direction: column;margin-bottom: 2px;">
+                                <span style="color: #000000;font-weight: bold;font-size: 14px;margin-bottom: 0.5;">NOME DO COLABORADOR</span>
+                                <span style="color: #505050;font-size: 8px;">Cargo</span>
+                            </div>
+                            
+                            <div style="color: #505050;font-size: 8px;line-height: 1.4;gap: 0;">
+                                <div>
+                                    <span>(27) 99999-9999</span> / <span>(27) 3333-3333</span>
+                                </div>
+                                <div>
+                                    colaborador@pvtsoftware.com.br
+                                </div>
+                            </div>
+                            
+                            <div style="color: #505050;font-size: 8px;">
+                                <span>https://pvtsoftware.com.br</span> <span>@pvtsoftware</span>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+                
         function gerarAssinaturaSimples() {
             const { nome, funcao, email, celular, telefone, whatsapp } = getColaboradorInfos()
             
@@ -424,54 +438,27 @@
             
             const whatsappClean = whatsapp.replace(/\D/g, '');
             
-            return `<table id='assinatura-simples' cellpadding="0" cellspacing="0" border="0" width="600" 
-                            style="margin:0; padding:0; font-family: Arial, sans-serif; color:#000; border-collapse:collapse; background-color: white;">
-                        <tr>
-                            <!-- Coluna Esquerda (Logo PVT) -->
-                            <td width="120" align="center" valign="middle" style="margin:0; padding:0;">
-                                <a href="https://pvtsoftware.com.br" target="_blank">
-                                    <img
-                                        src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/logo-pvt.png"
-                                        alt="PVT" width="120" style="display:block; border:0; margin:0; padding:0;"
-                                    >
-                                </a>
-                            </td>
-
-                            <!-- Coluna Centro (Informações do Colaborador) -->
-                            <td width="270" valign="middle" style="margin:0; padding:0;">
-                            <p style="margin:0; font-size:16px; font-weight:bold; color:#000;">
-                                ${nome.toUpperCase()}
-                            </p>
-                            <p style="margin:0; font-size:14px; color:#555;">
-                                ${funcao.toUpperCase()}
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="https://wa.me/${whatsappClean}" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                    ${celular} 
-                                </a>
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="mailto:${email}" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                    ${email}
-                                </a>
-                            </p>
-                            <p style="margin:0; font-size:13px; color:#555;">
-                                <a href="https://pvtsoftware.com.br" target="_blank" style="color:#0078d7; text-decoration:none;">
-                                www.pvtsoftware.com.br
-                                </a>
-                            </p>
-                            </td>
-
-                            <!-- Coluna Direita (Canal Homologado) -->
-                            <td width="180" align="center" valign="middle" style="margin:0; padding:0;">
-                            <a href="https://homologacaoecertificacao.totvs.com/document/pvt-software-e-servicos-ltda" target="_blank">
-                                <img
-                                src="https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/canal-homologado.png"
-                                alt="Canal Homologado TOTVS" width="180" style="display:block; border:0; margin:0; padding:0;">
-                            </a>
-                            </td>
-                        </tr>
-                        </table>`;
+            return `<div id='assinatura-simples' style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 110px;width: 460px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
+                        <div style="position: absolute; left: 34%; top: 15%; width: 43%; height: 70%; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div style="display: flex;flex-direction: column;margin-bottom: 2px;">
+                                <span style="color: #000000;font-weight: bold;font-size: 14px;margin-bottom: 0.5;">NOME DO COLABORADOR</span>
+                                <span style="color: #505050;font-size: 8px;">Cargo</span>
+                            </div>
+                            
+                            <div style="color: #505050;font-size: 8px;line-height: 1.4;gap: 0;">
+                                <div>
+                                    <span>(27) 99999-9999</span>
+                                </div>
+                                <div>
+                                    colaborador@pvtsoftware.com.br
+                                </div>
+                            </div>
+                            
+                            <div style="color: #505050;font-size: 8px;">
+                                <span>https://pvtsoftware.com.br</span> <span>@pvtsoftware</span>
+                            </div>
+                        </div>
+                    </div>`;
 
         }
         
@@ -643,109 +630,48 @@
             });
         });
 
+       const createHighQualityImageBlob = async (element, quality = 2, format = 'png') => {
+            const canvas = await html2canvas(element, {
+                backgroundColor: '#ffffff',
+                scale: quality,
+                useCORS: true,
+                logging: false
+            });
+            
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = element.offsetWidth;
+            finalCanvas.height = element.offsetHeight;
+            
+            const ctx = finalCanvas.getContext('2d');
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            
+            ctx.drawImage(canvas, 0, 0, finalCanvas.width, finalCanvas.height);
+            
+            const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png';
+            const imageQuality = format === 'jpg' ? 0.95 : 1.0;
+            
+            return new Promise(resolve => 
+                finalCanvas.toBlob(resolve, mimeType, imageQuality)
+            );
+        };
 
-        // Função para baixar a assinatura como PNG
-        async function baixarAssinaturaPNG() {
+       async function baixarAssinaturaPNGAlternativa() {
             if (!validarCamposObrigatorios()) {
                 return;
             }
             
-            const preview = document.getElementById('signature-preview');
+            // Corrigir a referência ao elemento
+            const preview = document.getElementById('signature-preview').firstElementChild;
             
-            try {
-
-                
-                // Mostrar indicador de carregamento (opcional)
-                const loadingMsg = document.createElement('div');
-                loadingMsg.textContent = '📸 Gerando imagem...';
-                loadingMsg.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background: rgba(0,0,0,0.8);
-                    color: white;
-                    z-index: 10000;
-                    font-family: Arial, sans-serif;
-                `;
-                document.body.appendChild(loadingMsg);
-
-                
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = preview.innerHTML; // Só o conteúdo interno
-                
-                // Configurações do html2canvas
-                const canvas = await html2canvas(tabelaAssinatura, {
-                    backgroundColor: null, // Fundo transparente
-                    scale: 2, // Maior resolução (2x)
-                    width: tabelaAssinatura,
-                    height: tabelaAssinatura,
-                    onclone: function(clonedDoc) {
-                        // Garantir que fontes e estilos sejam preservados no clone
-                        const clonedPreview = clonedDoc.getElementById('assinatura');
-                        if (clonedPreview) {
-                            clonedPreview.style.display = 'block';
-                            clonedPreview.style.visibility = 'visible';
-                        }
-                    }
-                });
-                
-                // Converter canvas para blob
-                canvas.toBlob(function(blob) {
-                    // Criar URL do blob
-                    const url = window.URL.createObjectURL(blob);
-                    
-                    // Criar elemento de download
-                    const link = document.createElement('a');
-                    link.download = `assinatura-email-${new Date().toISOString().split('T')[0]}.png`;
-                    link.href = url;
-                    
-                    // Simular clique para download
-                    document.body.appendChild(link);
-                    link.click();
-                    
-                    // Limpeza
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(loadingMsg);
-                    
-                    alert('✅ Assinatura salva como PNG! Você pode usar essa imagem no seu cliente de email.');
-                }, 'image/png', 1.0); // Qualidade máxima
-                
-            } catch (error) {
-                console.error('Erro ao gerar PNG:', error);
-                
-                // Remover loading se existir
-                const loadingMsg = document.querySelector('div');
-                if (loadingMsg && loadingMsg.textContent.includes('Gerando imagem')) {
-                    document.body.removeChild(loadingMsg);
-                }
-                
-                alert('❌ Erro ao gerar a imagem. Verifique se todas as imagens da assinatura carregaram corretamente.');
-            }
-        }
-
-        // Versão alternativa usando fetch para maior compatibilidade
-        async function baixarAssinaturaPNGAlternativa() {
-            if (!validarCamposObrigatorios()) {
+            if (!preview) {
+                alert('⚠ Erro: Elemento da assinatura não encontrado.');
                 return;
             }
-            
-            let preview;
-            
-            if (tipoAssinatura == "completa") {
-                preview = document.getElementById('assinatura-completa');
-            } else {
-                preview = document.getElementById('assinatura-simples');
-            }
-            
 
             try {
-                // Importar html2canvas dinamicamente se não estiver disponível
+                // Importar html2canvas se necessário
                 if (typeof html2canvas === 'undefined') {
-                    const script = document.createElement('script');
-                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                    document.head.appendChild(script);
                     
                     await new Promise((resolve, reject) => {
                         script.onload = resolve;
@@ -753,22 +679,13 @@
                     });
                 }
                 
-                const canvas = await html2canvas(preview, {
-                    backgroundColor: '#ffffff', // Fundo branco (melhor para email)
-                    scale: 3, // Alta resolução
-                    useCORS: true,
-                    logging: false
-                });
-                
-                // Converter para blob e baixar
-                canvas.toBlob(function(blob) {
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `assinatura-${Date.now()}.png`;
-                    a.click();
-                    URL.revokeObjectURL(url);
-                });
+                const imageBlob = await createHighQualityImageBlob(preview, 2, 'jpg');
+                const url = URL.createObjectURL(imageBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'assinatura-email.jpg';
+                a.click();
+                URL.revokeObjectURL(url);
                 
             } catch (error) {
                 console.error('Erro:', error);

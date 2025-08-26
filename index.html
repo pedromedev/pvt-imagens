@@ -407,23 +407,23 @@
             
             const whatsappClean = whatsapp.replace(/\D/g, '');
      
-            return `<div id='assinatura-completa' style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT-3.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 147px;width: 613px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
-                        <div style="position: absolute; left: 34%; top: 15%; width: 43%; height: 70%; display: flex; flex-direction: column; justify-content: space-between;">
+            return `<div id="assinatura-simples" style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT-3.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 118px;width: 510px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
+                        <div style="position: absolute;left: 34%;top: 15%;width: 43%;max-width: 38%;height: 80%;display: flex;flex-direction: column;justify-content: space-between;">
                             <div style="display: flex;flex-direction: column;margin-bottom: 2px;">
-                                <span style="color: #000000;font-weight: bold;font-size: 19px;margin-bottom: 0.5;">NOME DO COLABORADOR</span>
-                                <span style="color: #505050;font-size: 12px;">Cargo</span>
+                                <span style="color: #000000;font-weight: bold;font-size: 14.2px;margin-bottom: 0.5;">${nome.toUpperCase()}</span>
+                                <span style="color: #505050;font-size: 9.2px;">${capitalizeFirstLetter(funcao)}</span>
                             </div>
                             
-                            <div style="color: #505050;font-size: 12px;line-height: 1.4;gap: 0;">
+                            <div style="color: #505050;font-size: 9.2px;line-height: 1.4;gap: 0;">
                                 <div>
-                                    <span>(27) 99999-9999</span>
+                                    <span>${celular}</span> / <span>${telefone}</span>
                                 </div>
                                 <div>
-                                    colaborador@pvtsoftware.com.br
+                                    ${email}
                                 </div>
                             </div>
                             
-                            <div style="color: #505050;font-size: 12px;">
+                            <div style="color: #505050;font-size: 9.2px;">
                                 <span>https://pvtsoftware.com.br</span> <span>@pvtsoftware</span>
                             </div>
                         </div>
@@ -440,23 +440,23 @@
             
             const whatsappClean = whatsapp.replace(/\D/g, '');
 
-            return `<div id='assinatura-simples' style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT-3.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 147px;width: 613px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
-                        <div style="position: absolute; left: 34%; top: 15%; width: 43%; height: 70%; display: flex; flex-direction: column; justify-content: space-between;">
+            return `<div id="assinatura-simples" style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT-3.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 118px;width: 510px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
+                        <div style="position: absolute;left: 34%;top: 15%;width: 43%;max-width: 38%;height: 80%;display: flex;flex-direction: column;justify-content: space-between;">
                             <div style="display: flex;flex-direction: column;margin-bottom: 2px;">
-                                <span style="color: #000000;font-weight: bold;font-size: 19px;margin-bottom: 0.5;">NOME DO COLABORADOR</span>
-                                <span style="color: #505050;font-size: 12px;">Cargo</span>
+                                <span style="color: #000000;font-weight: bold;font-size: 14.2px;margin-bottom: 0.5;">${nome.toUpperCase()}</span>
+                                <span style="color: #505050;font-size: 9.2px;">${capitalizeFirstLetter(funcao)}</span>
                             </div>
                             
-                            <div style="color: #505050;font-size: 12px;line-height: 1.4;gap: 0;">
+                            <div style="color: #505050;font-size: 9.2px;line-height: 1.4;gap: 0;">
                                 <div>
-                                    <span>(27) 99999-9999</span> / <span> (27) 33333-3333 </span>
+                                    <span>${celular}</span>
                                 </div>
                                 <div>
-                                    colaborador@pvtsoftware.com.br
+                                    ${email}
                                 </div>
                             </div>
                             
-                            <div style="color: #505050;font-size: 12px;">
+                            <div style="color: #505050;font-size: 9.2px;">
                                 <span>https://pvtsoftware.com.br</span> <span>@pvtsoftware</span>
                             </div>
                         </div>

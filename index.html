@@ -254,7 +254,7 @@
         <div id="signature-preview"></div>
         
         <div class="botoes">
-            <button class="btn" onclick="baixarAssinatura()">📋 Baixar Assinatura PNG</button>
+            <button class="btn" onclick="baixarAssinatura()">📋 Baixar Assinatura SVG</button>
             <button class="btn" onclick="baixarHTML()">📁 Download HTML</button>
         </div>
     </div>
@@ -665,18 +665,18 @@
                 return;
             }
 
-            const format = 'png'
+            const format = 'svg'
 
             const node = document.getElementById('assinatura-simples')
             node.style.margin = 0
 
             try {
 
-                const dataUrl = await htmlToImage.toPng(node,{
+                const dataUrl = await htmlToImage.toSvg(node, {
                     cacheBust: true,
                     pixelRatio: 1,
                 });
-                saveAs(dataUrl, 'assinatura-email.png');
+                saveAs(dataUrl, 'assinatura-email.svg');
             
             } catch (err) {
                 console.error('Erro ao gerar imagem:', err);

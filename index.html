@@ -149,6 +149,13 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
+        .signature-toggle button img {
+            height: 16px;
+            width: 16px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
         .botoes {
             text-align: center;
             margin-top: 20px;
@@ -225,11 +232,11 @@
     <div class="info-card">
         <h1 style="display: flex; justify-content: center;"> ⚠️ INSTRUÇÕES </h1>
         <div class="info-card-content">
-            <h3>💡 Como configurar Corretamente</h3>
+            <h3>💡 Como configurar corretamente</h3>
             <p>
                 <strong>1.</strong> Preencha o formulário acima<br>
-                <strong>2.</strong> Escolha entre "Completa" (telefone fixo) ou "Simplificada" (apenas celular)<br>
-                <strong>3.</strong> Clique no botão <span class="highlight">"Baixar Assinatura PNG"</span> abaixo<br>
+                <strong>2.</strong> Escolha a versão: <span class="highlight">Outlook Desktop (PNG)</span> ou <span class="highlight">Outlook Navegador (SVG)</span><br>
+                <strong>3.</strong> Clique no botão <span class="highlight">"Baixar Assinatura"</span>; o formato será definido automaticamente conforme a aba selecionada (PNG para Desktop, SVG para Web).<br>
                 <strong>4.</strong> Copie o link gerado abaixo<br>
                 <strong>5.</strong> Siga as instruções do PDF: <a href="./Guia de configuração da assinatura outlook.pdf" target="_blank" class="highlight">Configurar assinatura</a>
             </p>
@@ -241,8 +248,8 @@
         
         <div class="signature-controls">
             <div class="signature-toggle">
-                <button id="btn-completa" onclick="trocarAssinatura('completa')">Completa</button>
-                <button id="btn-simples" class="active" onclick="trocarAssinatura('simples')">Simplificada</button>
+                <button id="btn-desktop" class="active" onclick="trocarFormato('png')"><img src="imagens/outlook.png" alt="Outlook">Outlook Desktop</button>
+                <button id="btn-web" onclick="trocarFormato('svg')"><img src="imagens/outlook.png" alt="Outlook">Outlook Navegador</button>
             </div>
         </div>
         
@@ -254,13 +261,14 @@
         <div id="signature-preview"></div>
         
         <div class="botoes">
-            <button class="btn" onclick="baixarAssinatura()">📋 Baixar Assinatura SVG</button>
+            <button class="btn" onclick="baixarAssinatura()">📋 Baixar Assinatura</button>
             <button class="btn" onclick="baixarHTML()">📁 Download HTML</button>
         </div>
     </div>
 
     <script>
         let tipoAssinatura = 'simples';
+        let tipoFormato = 'png';
         let whatsapp = '';
         let telefone_formatado = '';
 
@@ -512,6 +520,19 @@
             
             atualizarAssinatura();
         }
+
+        function trocarFormato(formato) {
+            tipoFormato = formato;
+            const btnDesktop = document.getElementById('btn-desktop');
+            const btnWeb = document.getElementById('btn-web');
+            if (formato === 'png') {
+                btnDesktop.classList.add('active');
+                btnWeb.classList.remove('active');
+            } else {
+                btnDesktop.classList.remove('active');
+                btnWeb.classList.add('active');
+            }
+        }
         
         function validarCamposObrigatorios() {
 
@@ -665,23 +686,27 @@
                 return;
             }
 
-            const format = 'svg'
-
-            const node = document.getElementById('assinatura-simples')
-            node.style.margin = 0
+            const node = document.getElementById('assinatura-simples');
+            node.style.margin = 0;
 
             try {
-
-                const dataUrl = await htmlToImage.toSvg(node, {
-                    cacheBust: true,
-                    pixelRatio: 1,
-                });
-                saveAs(dataUrl, 'assinatura-email.svg');
-            
+                if (tipoFormato === 'svg') {
+                    const dataUrl = await htmlToImage.toSvg(node, {
+                        cacheBust: true,
+                        pixelRatio: 1,
+                    });
+                    saveAs(dataUrl, 'assinatura-email.svg');
+                } else {
+                    const dataUrl = await htmlToImage.toPng(node, {
+                        cacheBust: true,
+                        pixelRatio: 3,
+                    });
+                    saveAs(dataUrl, 'assinatura-email.png');
+                }
             } catch (err) {
                 console.error('Erro ao gerar imagem:', err);
             } finally {
-                node.style.margin = 'auto'
+                node.style.margin = 'auto';
             }
         }
     

@@ -336,7 +336,9 @@
 
             params.append('whatsapp', whatsapp)
             params.append('email', email)
-            params.append('telefone', telefone_formatado)
+            if(telefone_formatado !== ''){
+                params.append('telefone', telefone_formatado)
+            }
 
             const newUrl = `${url}?${params}`
 
@@ -490,8 +492,12 @@
             const { telefone } = getColaboradorInfos()
 
             const telefoneNumeros = telefone.replace(/\D/g, '');
-            telefone_formatado= '55' + telefoneNumeros;
-
+            console.log(telefoneNumeros)
+            if(telefoneNumeros !== '') {
+                telefone_formatado= '55' + telefoneNumeros;  
+            } else {
+                telefone_formatado = ''
+            }
             atualizarAssinatura();
         }
         

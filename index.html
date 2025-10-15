@@ -453,23 +453,23 @@
             const whatsappClean = whatsapp.replace(/\D/g, '');
 
             return `<div id="assinatura-simples" style="background-image: url('https://raw.githubusercontent.com/pedromedev/pvt-imagens/master/imagens/Assinatura%20email%20PVT-3.png');background-size: cover;background-repeat: no-repeat;background-position: center;height: 118px;width: 510px;font-family: 'Roboto', Arial, sans-serif;position: relative;margin: 0 auto;">
-                        <div style="position: absolute;left: 34%;top: 15%;width: 43%;max-width: 38%;height: 80%;display: flex;flex-direction: column;justify-content: space-between;">
-                            <div style="display: flex;flex-direction: column;margin-bottom: 2px;">
-                                <span style="color: #000000;font-weight: bold;font-size: 14.2px;margin-bottom: 0.5;">${nome.toUpperCase()}</span>
-                                <span style="color: #505050;font-size: 9.2px;">${capitalizeFirstLetter(funcao)}</span>
+                        <div style="position: absolute;left: 34%;top: 15%;width: 66%;height: 80%;display: flex;flex-direction: column;justify-content: space-between;">
+                            <div style="display: flex;flex-direction: column;margin-bottom: 8px;">
+                                <span style="color: #000000;font-weight: bold;font-size: 13px;line-height: 1.2;white-space: nowrap;">${nome.toUpperCase()}</span>
+                                <span style="color: #505050;font-size: 9.2px;margin-top: 2px;white-space: nowrap;">${capitalizeFirstLetter(funcao)}</span>
                             </div>
                             
-                            <div style="color: #505050;font-size: 9.2px;line-height: 1.4;gap: 0;">
-                                <div>
-                                    <span>${celular}</span>
+                            <div style="color: #505050;font-size: 9.2px;line-height: 1.4;">
+                                <div style="margin-bottom: 2px;">${celular}</div>
+                                <div style="margin-bottom: 3px;">${email}</div>
+                                <div style="display: flex;align-items: center;gap: 3px;">
+                                    <span>🌐</span>
+                                    <span>https://pvtsoftware.com.br</span>
                                 </div>
-                                <div>
-                                    ${email}
+                                <div style="display: flex;align-items: center;gap: 3px;margin-top: 2px;">
+                                    <svg fill="#E4405F" width="10px" height="10px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="min-width: 10px;"><path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/><path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/></svg>
+                                    <span> pvtsoftware</span>
                                 </div>
-                            </div>
-                            
-                            <div style="color: #505050;font-size: 9.2px;">
-                                <span>https://pvtsoftware.com.br</span> <span>@pvtsoftware</span>
                             </div>
                         </div>
                     </div>`;

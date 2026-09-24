@@ -219,8 +219,8 @@
         </div>
         
         <div class="form-group">
-            <label for="celular">Celular: <span style="color: red;">*</span></label>
-            <input type="text" id="celular" placeholder="(27) 99999-9999" value="" oninput="formatarCelular(this)" onchange="atualizarAssinatura()"  required>
+            <label for="celular">Celular:</label>
+            <input type="text" id="celular" placeholder="(27) 99999-9999" value="" oninput="formatarCelular(this)" onchange="atualizarAssinatura()">
         </div>
         
         <div class="form-group">
@@ -344,11 +344,13 @@
             const url = new URL('https://ojotape05.github.io/')
             const params = new URLSearchParams(url.search)
 
-            const { email, whatsapp, telefone } = getColaboradorInfos()
+            const { email } = getColaboradorInfos()
 
-            params.append('whatsapp', whatsapp)
+            if (whatsapp) {
+                params.append('whatsapp', whatsapp)
+            }
             params.append('email', email)
-            if(telefone_formatado !== ''){
+            if (telefone_formatado !== '') {
                 params.append('telefone', telefone_formatado)
             }
 
@@ -415,10 +417,10 @@
 
             const { nome, funcao, email, celular, telefone, whatsapp } = getColaboradorInfos()
             
-            let telefones = [];
-            if (celular) telefones.push(celular);
-            if (telefone && telefone !== celular) telefones.push(telefone);
-            const telefonesTexto = telefones.join(' / ');
+            const telefonesTexto = montarTelefonesTexto(celular, telefone);
+            const linhaTelefones = telefonesTexto
+                ? `<div><span>${telefonesTexto}</span></div>`
+                : '';
             
             const whatsappClean = whatsapp.replace(/\D/g, '');
      
@@ -430,9 +432,7 @@
                             </div>
                             
                             <div style="color: #505050;font-size: 9.2px;line-height: 1.4;gap: 0;">
-                                <div>
-                                    <span>${celular}</span> / <span>${telefone}</span>
-                                </div>
+                                ${linhaTelefones}
                                 <div>
                                     ${email}
                                 </div>
@@ -448,10 +448,10 @@
         function gerarAssinaturaSimples() {
             const { nome, funcao, email, celular, telefone, whatsapp } = getColaboradorInfos()
             
-            let telefones = [];
-            if (celular) telefones.push(celular);
-            if (telefone && telefone !== celular) telefones.push(telefone);
-            const telefonesTexto = telefones.join(' / ');
+            const telefonesTexto = montarTelefonesTexto(celular, telefone);
+            const linhaTelefones = telefonesTexto
+                ? `<div style="margin-bottom: 2px;">${telefonesTexto}</div>`
+                : '';
             
             const whatsappClean = whatsapp.replace(/\D/g, '');
 
@@ -463,7 +463,7 @@
                             </div>
                             
                             <div style="color: #505050;font-size: 9.2px;line-height: 1.4;">
-                                <div style="margin-bottom: 2px;">${celular}</div>
+                                ${linhaTelefones}
                                 <div style="margin-bottom: 3px;">${email}</div>
                                 <div style="display: flex;align-items: center;gap: 3px;">
                                     <span>🌐</span>
@@ -491,11 +491,18 @@
             }
         }
         
+        function montarTelefonesTexto(celular, telefone) {
+            const telefones = [];
+            if (celular) telefones.push(celular);
+            if (telefone && telefone !== celular) telefones.push(telefone);
+            return telefones.join(' / ');
+        }
+
         function atualizarWhatsapp() {
             const { celular } = getColaboradorInfos()
 
             const celularNumeros = celular.replace(/\D/g, '');
-            whatsapp= '55' + celularNumeros;
+            whatsapp = celularNumeros.length === 11 ? '55' + celularNumeros : '';
 
             atualizarAssinatura();
         }
@@ -504,12 +511,7 @@
             const { telefone } = getColaboradorInfos()
 
             const telefoneNumeros = telefone.replace(/\D/g, '');
-            console.log(telefoneNumeros)
-            if(telefoneNumeros !== '') {
-                telefone_formatado= '55' + telefoneNumeros;  
-            } else {
-                telefone_formatado = ''
-            }
+            telefone_formatado = telefoneNumeros.length === 10 ? '55' + telefoneNumeros : '';
             atualizarAssinatura();
         }
         
@@ -546,14 +548,13 @@
         
         function validarCamposObrigatorios() {
 
-            const { nome, funcao, email, celular } = getColaboradorInfos()
+            const { nome, funcao, email, celular, telefone } = getColaboradorInfos()
             
             const camposVazios = [];
             
             if (!nome) camposVazios.push('Nome');
             if (!funcao) camposVazios.push('Função');
             if (!email) camposVazios.push('Email');
-            if (!celular) camposVazios.push('Celular');
             
             if (camposVazios.length > 0) {
                 alert(`⚠️ Por favor, preencha os seguintes campos obrigatórios:\n• ${camposVazios.join('\n• ')}`);
@@ -567,10 +568,17 @@
                 return false;
             }
             
-            // Validar se o celular tem 11 dígitos
+            // Celular é opcional; quando preenchido, precisa ter 11 dígitos
             const celularNumeros = celular.replace(/\D/g, '');
-            if (celularNumeros.length !== 11) {
+            if (celularNumeros && celularNumeros.length !== 11) {
                 alert('⚠️ Por favor, insira um celular válido com 11 dígitos.');
+                return false;
+            }
+
+            // Fixo é opcional; 8 dígitos locais + DDD (10 no total), ex.: (27) 9975-3170
+            const telefoneNumeros = telefone.replace(/\D/g, '');
+            if (telefoneNumeros && telefoneNumeros.length !== 10) {
+                alert('⚠️ Por favor, insira um telefone fixo válido com DDD e 8 dígitos, no formato (27) 3333-4444.');
                 return false;
             }
             
